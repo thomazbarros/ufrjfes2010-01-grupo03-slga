@@ -1,44 +1,71 @@
-<project name="WebSipPhone" basedir=".">
-    <property name="lib.dir" value="lib"/>
-    <property name="src.dir" value="src"/>
-    <property name="bin.dir" value="bin"/>
+<project name="WebSipPhone" default="deploy" basedir=".">
+    <property file="build.properties"/>
     
-    <property name="jar.dir" value="${bin.dir}/jar"/>
-    <property name="class.dir" value="${bin.dir}/class"/>
+    <property name="app.name" value="${project.name}"/>
+    <property name="src.home" value="${app.home}/src"/>
+    <property name="doc.home" value="${app.home}/doc"/>
+    <property name="lib.home" value="${app.home}/lib"/>
+    <property name="war.home" value="${app.home}/war"/>
+    <property name="bin.home" value="${app.home}/bin"/>
+    <property name="lib.dir" value="${bin.home}/WEB-INF/lib"/>
+    <property name="classes.dir" value="${bin.home}/WEB-INF/classes"/>
+    
+    <property name="compile.debug"       value="true"/>
+    <property name="compile.deprecation" value="false"/>
+    <property name="compile.optimize"    value="true"/>
 
-    <property name="main-class" value="main.WebSipPhone"/>
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask"/>
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask"/>
     
     <path id="classpath">
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
 
     <target name="clean">
-        <delete dir="${bin.dir}"/>
+        <delete dir="${bin.home}"/>
+        <delete dir="${war.home}"/>
+    </target>
+    
+    <target name="prepare" depends="clean">
+        <mkdir dir="${bin.home}"/>
+        <mkdir dir="${bin.home}/WEB-INF"/>
+        <mkdir dir="${lib.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        
+        <copy todir="${lib.dir}">
+            <fileset dir="${lib.home}"/>
+        </copy>
+    </target>
+    
+    <target name="compile" depends="prepare">
+        <javac srcdir="${src.home}"
+        destdir="${classes.dir}"
+        classpathref="classpath"
+        debug="${compile.debug}"
+        optimize="${compile.optimize}"
+        deprecation="${compile.deprecation}"/>
+    </target>
+    
+    <target name="war" depends="compile">
+        <mkdir dir="${war.home}"/>
+        <war destfile="${war.home}/${app.name}.war"
+        webxml="${app.home}/web.xml"
+        basedir="${bin.home}"/>
     </target>
 
-    <target name="compile">
-        <mkdir dir="${class.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${class.dir}" classpathref="classpath"/>
+    <target name="deploy" depends="war,undeploy">
+        <deploy url="${manager.url}"
+        username="${manager.username}"
+        password="${manager.password}"
+        path="${app.path}"
+        war="file:${war.home}/${app.name}.war"/>
     </target>
 
-    <target name="jar" depends="compile">
-        <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${class.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
-            </manifest>
-        </jar>
-    </target>
-
-    <target name="run" depends="jar">
-        <java fork="true" classname="${main-class}">
-            <classpath>
-                <path refid="classpath"/>
-                <path location="${jar.dir}/${ant.project.name}.jar"/>
-            </classpath>
-        </java>
-    </target>
-
-    <target name="main" depends="clean,jar">
+    <target name="undeploy">
+        <undeploy url="${manager.url}"
+        username="${manager.username}"
+        password="${manager.password}"
+        path="${app.path}"
+        failonerror="no"/>
     </target>
 </project>
