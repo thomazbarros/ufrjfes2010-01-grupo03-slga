@@ -70,7 +70,7 @@ public abstract class AbstractSipLayer implements SipListener {
         return headerFactory.createMaxForwardsHeader(max);
     }
 
-    public SipLayer(String host, int port)
+    public AbstractSipLayer(String host, int port)
         throws SipException, ParseException, InvalidArgumentException {
 
         SipFactory sipFactory = SipFactory.getInstance();
