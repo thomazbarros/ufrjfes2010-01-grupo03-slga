@@ -1,7 +1,7 @@
 <project name="WebSipPhone" default="deploy" basedir=".">
     <property file="build.properties"/>
     
-    <property name="app.name" value="${project.name}"/>
+    <property name="app.name" value="WebSipPhone"/>
     <property name="src.home" value="${app.home}/src"/>
     <property name="doc.home" value="${app.home}/doc"/>
     <property name="lib.home" value="${app.home}/lib"/>

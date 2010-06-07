@@ -5,18 +5,26 @@ import com.vaadin.ui.*;
 public class MainWindow extends Window {
 
     public MainWindow() {
-        GridLayout layout = new GridLayout(3,3);
+        super("Web Sip Phone");
+
+        Window friends = new Window("Friends");
+        VerticalLayout layout = (VerticalLayout)friends.getContent();
+        
+        layout.setMargin(true);
         layout.setSpacing(true);
+        layout.setSizeUndefined();
 
         TextField text = new TextField();
-        layout.addComponent(text, 0, 1);
+        text.setWidth("300px");
+        layout.addComponent(text);
         layout.setComponentAlignment(text, Alignment.MIDDLE_CENTER);
 
         Table table = new Table();
-        layout.addComponent(table, 0, 2);
+        table.setWidth("300px");
+        layout.addComponent(table);
         layout.setComponentAlignment(table, Alignment.MIDDLE_CENTER);
-
-        setContent(layout);
+        
+        addWindow(friends);
     }
 }
 
