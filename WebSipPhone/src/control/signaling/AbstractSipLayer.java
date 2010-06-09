@@ -1,8 +1,9 @@
-package signaling;
+package control.signaling;
 
 import java.net.*;
 import java.util.*;
 import java.text.*;
+
 import javax.sip.*;
 import javax.sip.header.*;
 import javax.sip.address.*;
@@ -23,14 +24,14 @@ public abstract class AbstractSipLayer implements SipListener {
         return provider.getListeningPoint().getPort();
     }
     
-    public static SipURI createSipURI(String username, String addressString)
+    public static SipURI createSipURI(String username, String host, int port)
         throws ParseException {
-        return addressFactory.createSipURI(username, addressString);
+        return addressFactory.createSipURI(username, host + ":" + port);
     }
 
-    public static Address createAddress(String username, String addressString)
+    public static Address createAddress(String username, String host, int port)
         throws ParseException {
-        SipURI uri = createSipURI(username, addressString);
+        SipURI uri = createSipURI(username, host, port);
         Address address = addressFactory.createAddress(uri);
         address.setDisplayName(username);
         return address;
@@ -45,9 +46,22 @@ public abstract class AbstractSipLayer implements SipListener {
         throws ParseException {
         return headerFactory.createFromHeader(address, "WebSipPhone0.1");
     }
+    
+    public static FromHeader createFromHeader(String username, String host, int port)
+        throws ParseException {
+        
+        Address address = createAddress(username, host, port);
+        return createFromHeader(address);
+    }
 
     public static ToHeader createToHeader(Address address)
         throws ParseException {
+        return headerFactory.createToHeader(address, null);
+    }
+
+    public static ToHeader createToHeader(String username, String host, int port)
+        throws ParseException {
+        Address address = createAddress(username, host, port);
         return headerFactory.createToHeader(address, null);
     }
 
@@ -69,7 +83,7 @@ public abstract class AbstractSipLayer implements SipListener {
         throws InvalidArgumentException {
         return headerFactory.createMaxForwardsHeader(max);
     }
-
+    
     public AbstractSipLayer(String host, int port)
         throws SipException, ParseException, InvalidArgumentException {
 
