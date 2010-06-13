@@ -1,4 +1,4 @@
-package control.signaling;
+package control.base.signaling;
 
 import java.net.*;
 import java.util.*;
@@ -39,7 +39,7 @@ public abstract class AbstractSipLayer implements SipListener {
     
     public static Address getLocalAddress(String username)
         throws ParseException {
-        return createAddress(username, getHost() + ":" + getPort());
+        return createAddress(username, getHost(), getPort());
     }
     
     public static FromHeader createFromHeader(Address address)
