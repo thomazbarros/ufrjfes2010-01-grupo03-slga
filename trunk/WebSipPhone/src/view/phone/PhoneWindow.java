@@ -1,10 +1,10 @@
-package view;
+package view.phone;
 
 import com.vaadin.ui.*;
 
-public class MainWindow extends Window {
+public class PhoneWindow extends Window {
 
-    public MainWindow() {
+    public PhoneWindow() {
         super("Web Sip Phone");
 
         Window friends = new Window("Friends");
