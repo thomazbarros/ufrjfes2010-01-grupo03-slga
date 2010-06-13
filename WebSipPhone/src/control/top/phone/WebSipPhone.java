@@ -1,12 +1,12 @@
-package main;
+package control.top.phone;
 
 import com.vaadin.Application;
 
-import view.MainWindow;
+import view.phone.PhoneWindow;
 
 public class WebSipPhone extends Application {
     @Override
     public void init() {
-        setMainWindow(new MainWindow());
+        setMainWindow(new PhoneWindow());
     }
 }
