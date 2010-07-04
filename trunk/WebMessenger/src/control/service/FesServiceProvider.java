@@ -92,4 +92,8 @@ public class FesServiceProvider implements ServiceProvider {
         public void connectionClosed() {
         }
     }
+    
+    public XMPPConnection getConncetion() {
+    	return connection;
+    }
 }
