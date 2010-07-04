@@ -1,5 +1,7 @@
 package control.service;
 
+import model.structural.Contact;
+
 public interface PresenceServiceListener {
     /**
     *   Adds a contact to the online contacts.
