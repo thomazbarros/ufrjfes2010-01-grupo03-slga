@@ -29,9 +29,9 @@ public interface PresenceManager {
     
     /**
     *   Gets user contacts filtered by name.
-    *   @param str is part of a contact name.
+    *   @param begin is the start of an email.
     *   @return A Map object with the user contacts mapped into its status wich
     *       theirs email contains str.
     */
-    public Map<String, Contact> getContacts(String str);
+    public Map<String, Contact> getContacts(String begin);
 }
