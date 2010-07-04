@@ -1,8 +1,8 @@
-package control.base.signal;
+package control.chat;
 
 import model.structural.Contact;
 
-import control.base.signal.MessageReceiver;
+import control.chat.MessageReceiver;
 
 public interface ChatHandler {
     /**
