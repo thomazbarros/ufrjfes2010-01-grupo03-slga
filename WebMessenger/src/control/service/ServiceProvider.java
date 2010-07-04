@@ -1,9 +1,9 @@
-package control.base.signal;
+package control.service;
 
 import model.structural.Contact;
 
-import control.base.signal.PresenceManager;
-import control.base.signal.ChatHandler;
+import control.presence.PresenceManager;
+import control.chat.ChatHandler;
 
 public interface ServiceProvider {
     /**

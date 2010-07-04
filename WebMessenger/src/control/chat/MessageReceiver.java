@@ -1,4 +1,4 @@
-package control.base.signal;
+package control.chat;
 
 public interface MessageReceiver {
     /**
