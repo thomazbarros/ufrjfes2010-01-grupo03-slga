@@ -1,4 +1,7 @@
-public class FesServiceProvider{
+import control.service.FesServiceProvider;
+import org.junit.Test;
+
+public class FesServiceProviderTest{
 	
 	FesServiceProvider fes;
 	
