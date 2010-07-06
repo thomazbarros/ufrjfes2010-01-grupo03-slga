@@ -1,4 +1,4 @@
-package control.base;
+package control.presence;
 
 public interface PresenceListener {
 	public void entered(String contact);

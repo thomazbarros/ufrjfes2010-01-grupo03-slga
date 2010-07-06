@@ -1,4 +1,4 @@
-package control.base;
+package control.presence;
 
 public interface PresenceManager {
 	public void logout();
