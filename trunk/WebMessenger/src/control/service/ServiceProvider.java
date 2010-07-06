@@ -1,4 +1,4 @@
-package control.base;
+package control.service;
 
 public interface ServiceProvider {
 	public void setConnectionListener(ConnectionListener listener);

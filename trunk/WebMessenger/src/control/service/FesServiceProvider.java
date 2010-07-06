@@ -1,4 +1,4 @@
-package control.top;
+package control.service;
 
 import control.base.ChatManager;
 import control.base.ConnectionListener;
