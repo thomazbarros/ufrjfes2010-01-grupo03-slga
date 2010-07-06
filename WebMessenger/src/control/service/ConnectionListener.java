@@ -1,4 +1,4 @@
-package control.base;
+package control.service;
 
 public interface ConnectionListener {
 	public void connectionEvent(String message);
