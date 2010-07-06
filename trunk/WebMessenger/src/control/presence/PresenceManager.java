@@ -1,37 +1,9 @@
-package control.presence;
-
-import java.util.Map;
-
-import model.structural.Contact;
+package control.base;
 
 public interface PresenceManager {
-    /**
-    *   Gets user own status.
-    *   @return A String object with the user status.
-    */
-    public String getStatus();
-
-    /**
-    *   Sets user own status.
-    *   @param status is the new status of the user.
-    *
-    *   Postcondition:
-    *       The user has an new status.
-    *       User contacts may see this new status.
-    */
-    public void setStatus(String status);
-
-    /**
-    *   Gets user contacts.
-    *   @return A Map object with the user contacts mapped into its status.
-    */
-    public Map<String, Contact> getContacts();
-    
-    /**
-    *   Gets user contacts filtered by name.
-    *   @param begin is the start of an email.
-    *   @return A Map object with the user contacts mapped into its status wich
-    *       theirs email contains str.
-    */
-    public Map<String, Contact> getContacts(String begin);
+	public void logout();
+	
+	public void setStatus(String status);
+	
+	public void setPresenceListener(PresenceListener listener);
 }
