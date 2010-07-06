@@ -1,30 +1,26 @@
-package control.presence;
+package control.top;
 
-import java.util.Map;
-import java.util.TreeMap;
-
-import model.structural.Contact;
+import control.base.PresenceListener;
+import control.base.PresenceManager;
 
 public class FesPresenceManager implements PresenceManager {
-    private String userStatus;
-    private TreeMap<String, Contact> contacts;
+	
+	@Override
+	public void logout() {
+		// TODO Auto-generated method stub
+		
+	}
 
-    public String getStatus() {
-        return userStatus;
-    }
+	@Override
+	public void setPresenceListener(PresenceListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    public void setStatus(String status) {
-        userStatus = status;
-    }
+	@Override
+	public void setStatus(String status) {
+		// TODO Auto-generated method stub
+		
+	}
 
-    public Map<String, Contact> getContacts() {
-        return contacts;
-    }
-    
-    public Map<String, Contact> getContacts(String begin) {
-        // TODO está errado! pesquisar pelo campo contact.email 
-        char last = (char)(begin.toCharArray()[begin.length()-1] + 1);
-        String end = begin.substring(begin.length()-1) + last;
-        return contacts.subMap(begin, end);
-    }
 }
