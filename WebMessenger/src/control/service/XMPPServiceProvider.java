@@ -13,6 +13,8 @@ public class XMPPServiceProvider implements ServiceProvider {
 	
 	private ConnectionConfiguration configuration;
 	private XMPPConnection connection;
+	private XMPPChatHandler chatHandler;
+	private ConnectionListener connectionListener;
 	
 	public XMPPServiceProvider(String server, int port) throws XMPPException {
 		// TODO Auto-generated constructor stub
@@ -22,12 +24,18 @@ public class XMPPServiceProvider implements ServiceProvider {
 		configuration.setSASLAuthenticationEnabled(true);
 		
 		connection = new XMPPConnection(configuration);
+		chatHandler = new XMPPChatHandler();
+		connectionListener = new ConectionListener();
 	}
 
 	@Override
 	public ChatManager chat(String contact) throws Exception {
+		ChatManager chatmanager = connection.getChatManager();
 		// TODO Auto-generated method stub
-		return null;
+		
+		Chat newChat = chatmanager.createChat(contact,chatHandler);
+
+		return chatmanager;
 	}
 
 	@Override
@@ -42,6 +50,7 @@ public class XMPPServiceProvider implements ServiceProvider {
 	@Override
 	public void setConnectionListener(ConnectionListener listener) {
 		// TODO Auto-generated method stub
+		this.conectionListener = listener;
 
 	}
 
