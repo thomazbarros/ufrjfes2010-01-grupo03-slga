@@ -4,7 +4,7 @@ import model.structural.Contact;
 
 import control.chat.MessageReceiver;
 
-public class FesChatHandler implements ChatHandler {
+public class XMPPChatHandler implements ChatHandler {
     private MessageReceiver receiver;
     
     public void add(Contact contact) {
