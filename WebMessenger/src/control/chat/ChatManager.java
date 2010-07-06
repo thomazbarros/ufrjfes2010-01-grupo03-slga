@@ -1,4 +1,4 @@
-package control.base;
+package control.chat;
 
 public interface ChatManager {
 	public void send(String message);

@@ -1,4 +1,4 @@
-package control.top;
+package control.chat;
 
 import control.base.ChatListener;
 import control.base.ChatManager;
