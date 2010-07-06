@@ -1,4 +1,4 @@
-package control.top;
+package control.presence;
 
 import control.base.PresenceListener;
 import control.base.PresenceManager;
