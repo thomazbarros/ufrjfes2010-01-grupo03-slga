@@ -1,9 +1,12 @@
+package model.percistence;
+
 import java.io.FileReader;
-import org.xml.sax.XMLReader;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
-import org.xml.sax.helpers.XMLReaderFactory;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 public class AbstractSAX extends DefaultHandler
 {
@@ -28,8 +31,7 @@ public class AbstractSAX extends DefaultHandler
 	{
 		if ("".equals (uri))
 			return new String("Start element: " + qName);
-		else
-			return new String("Start element: {" + uri + "}" + name);
+		return new String("Start element: {" + uri + "}" + name);
 	}
 
 	
@@ -47,7 +49,7 @@ public class AbstractSAX extends DefaultHandler
 		System.out.print("Characters:    \"");
 		for (int i = start; i < start + length; i++) {
 			switch (ch[i]) {
-		   	  Scase '\\':
+		   	  case '\\':
 				System.out.print("\\\\");
 				break;
 			  case '"':
