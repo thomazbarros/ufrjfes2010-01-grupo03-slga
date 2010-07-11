@@ -7,29 +7,33 @@ import control.wrap.XMPPMessageListener;
 public class XMPPMessageService implements
 	XMPPMessageListener,
 	MessageService {
+	
+	private MultiUserChat multiUserChat;
+	private String contact;
+	
+	public XMPPMessageService(MultiUserChat multiUserChat, String contact){
+		multiUserChat = this.multiUserChat;
+		contact = this.contact;
+	}
 
 	@Override
 	public void addMessageReceiver(MessageReceiver receiver) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public void invite(String contact) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void kick(String contact) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void send(String to, String message) {
-		// TODO Auto-generated method stub
-		
+	public void send(String message) {
+		multiUserChat.send(message);
 	}
 
 }
