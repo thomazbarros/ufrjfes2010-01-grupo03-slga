@@ -22,8 +22,8 @@ public class XMPPMessageService implements
 	}
 
 	@Override
-	public void invite(String contact) {
-		// TODO Auto-generated method stub
+	public void invite(String contact, String invitationMessage) {
+		multiUserChat.invite(contact, invitationMessage);
 	}
 
 	@Override
