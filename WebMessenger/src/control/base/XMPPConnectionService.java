@@ -5,6 +5,7 @@ import java.util.TreeSet;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smackx.muc.MultiUserChat;
 
 import control.top.ConnectionListener;
 import control.top.ConnectionService;
@@ -18,10 +19,12 @@ public class XMPPConnectionService implements
 	
 	private XMPPConnection connection;
 	private Set<ConnectionListener> listeners;
+	private Set<XMPPMessageService> chats;
 	
 	public XMPPConnectionService() {
 		this.connection = null;
 		this.listeners = new TreeSet<ConnectionListener>();
+		this.chats = new TreeSet<XMPPMessageService>();
 	}
 	
 	private void sendConnectionEvent(String message) {
@@ -50,7 +53,9 @@ public class XMPPConnectionService implements
 	@Override
 	public MessageService chat(String contact) throws Exception {
 		if(connection != null) {
-
+			MultiUserChat multiChat = new MultiUserChat(connection,"myroom1@gmail.com");
+			XMPPMessageService messageService = new XMPPMessageService(multiChat,contact);
+			chats.add(messageService);
 		}
 		return null;
 	}

@@ -1,5 +1,7 @@
 package control.base;
 
+import org.jivesoftware.smackx.muc.MultiUserChat;
+
 import control.top.MessageReceiver;
 import control.top.MessageService;
 import control.wrap.XMPPMessageListener;
