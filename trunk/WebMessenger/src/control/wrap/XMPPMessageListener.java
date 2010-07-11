@@ -1,6 +1,8 @@
 package control.wrap;
 
+import org.jivesoftware.smack.MessageListener;
 
-public interface XMPPMessageListener {
+
+public interface XMPPMessageListener{ //extends MessageListener {
 
 }
