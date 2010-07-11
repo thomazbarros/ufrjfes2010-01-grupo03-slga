@@ -29,13 +29,13 @@ public class XMPPMessageService implements
 	}
 
 	@Override
-	public void kick(String contact) {
-		// TODO Auto-generated method stub
+	public void kick(String contact, String reason) {
+		multiUserChat.kickParticipant(contact, reason);
 	}
 
 	@Override
 	public void send(String message) {
-		multiUserChat.send(message);
+		multiUserChat.sendMessage(message);
 	}
 
 }
