@@ -1,5 +1,4 @@
 package test;
-package control.base;
 
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.muc.MultiUserChat;
