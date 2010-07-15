@@ -1,5 +1,6 @@
 package control.base;
 
+import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 
 import control.top.MessageReceiver;
@@ -29,13 +30,12 @@ public class XMPPMessageService implements
 	}
 
 	@Override
-	public void kick(String contact, String reason) {
+	public void kick(String contact, String reason) throws XMPPException{
 		multiUserChat.kickParticipant(contact, reason);
 	}
 
 	@Override
-	public void send(String message) {
+	public void send(String message) throws XMPPException {
 		multiUserChat.sendMessage(message);
 	}
-
 }
