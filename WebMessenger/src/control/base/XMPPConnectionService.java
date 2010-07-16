@@ -20,11 +20,13 @@ public class XMPPConnectionService implements
 	private XMPPConnection connection;
 	private Set<ConnectionListener> listeners;
 	private Set<XMPPMessageService> chats;
+	private MultiUserChat multiChat;
 	
 	public XMPPConnectionService() {
 		this.connection = null;
 		this.listeners = new TreeSet<ConnectionListener>();
 		this.chats = new TreeSet<XMPPMessageService>();
+		multiChat = new MultiUserChat(connection,"myroom1@gmail.com");
 	}
 	
 	private void sendConnectionEvent(String message) {
@@ -53,7 +55,6 @@ public class XMPPConnectionService implements
 	@Override
 	public MessageService chat(String contact) throws Exception {
 		if(connection != null) {
-			MultiUserChat multiChat = new MultiUserChat(connection,"myroom1@gmail.com");
 			XMPPMessageService messageService = new XMPPMessageService(multiChat,contact);
 			chats.add(messageService);
 		}
@@ -128,6 +129,10 @@ public class XMPPConnectionService implements
 	@Override
 	public void reconnectionSuccessful() {
 		sendConnectionEvent("Connected...");
+	}
+
+	public MultiUserChat getMultiChat() {
+		return multiChat;
 	}
 
 }
