@@ -35,7 +35,7 @@ public class MessageServiceTest{
 	kick() throws XMPPException{
 		service.kick(contact, "");
 		Collection<Affiliate> contacts = connection.getMultiChat().getMembers();
-		Assert.assertNull(contacts);
+		Assert.assertFalse(contacts.contains(contact));
 	}
 	
 	@Test public void
