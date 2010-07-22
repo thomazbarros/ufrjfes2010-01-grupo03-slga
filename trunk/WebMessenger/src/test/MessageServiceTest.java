@@ -37,4 +37,10 @@ public class MessageServiceTest{
 		Collection<Affiliate> contacts = connection.getMultiChat().getMembers();
 		Assert.assertNull(contacts);
 	}
+	
+	@Test public void
+	send() throws XMPPException{
+		service.send("Cante e seja feliz!");
+		Assert.assertEquals("Cante e seja feliz!", connection.getMultiChat().nextMessage().toString());
+	}
 }
