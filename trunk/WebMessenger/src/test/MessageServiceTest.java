@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import junit.framework.Assert;
 
-import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -20,8 +19,6 @@ import org.junit.runner.RunWith;
 
 import control.base.XMPPConnectionService;
 import control.top.MessageService;
-import control.top.PresenceListener;
-import control.top.PresenceService;
 
 @RunWith(JMock.class)
 public class MessageServiceTest{
@@ -31,7 +28,7 @@ public class MessageServiceTest{
 	static Mockery context;
 	
 	@BeforeClass static public void
-	messageInitiation() throws Exception{
+	messageServiceInitiation() throws Exception{
 		contact = "leopoldolusquino@gmail.com";
 		context = new JUnit4Mockery();
 		connectionService = new XMPPConnectionService();
@@ -66,11 +63,5 @@ public class MessageServiceTest{
 		service.kick(contact, "");
 		Collection<Affiliate> contacts = connectionService.getMultiChat().getMembers();
 		Assert.assertFalse(contacts.contains(contact));
-	}
-	
-	@Test public void
-	testSend() throws XMPPException{
-		service.send("Cante e seja feliz!");
-		Assert.assertEquals("Cante e seja feliz!", connectionService.getMultiChat().nextMessage().toString());
 	}
 }
