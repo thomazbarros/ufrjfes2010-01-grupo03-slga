@@ -1,11 +1,13 @@
 package control.base;
 
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smackx.muc.MultiUserChat;
 
 import control.top.ConnectionListener;
 import control.top.ConnectionService;
@@ -19,7 +21,7 @@ public class XMPPConnectionService implements
 	
 	private XMPPConnection connection;
 	private Set<ConnectionListener> listeners;
-	private Set<XMPPMessageService> chats;
+	private Map<String, MessageService> chats;
 	
 	private void initConnection(String server, int port) {
 		ConnectionConfiguration configuration = new
@@ -29,10 +31,9 @@ public class XMPPConnectionService implements
 		this.connection = new XMPPConnection(configuration);
 	}
 	
-	public XMPPConnectionService(String server, int port) {
-		initConnection(server, port);
+	public XMPPConnectionService() {
 		this.listeners = new TreeSet<ConnectionListener>();
-		this.chats = new TreeSet<XMPPMessageService>();
+		this.chats = new TreeMap<String, MessageService>();
 	}
 	
 	@Override
@@ -41,17 +42,8 @@ public class XMPPConnectionService implements
 	}
 
 	@Override
-	public MessageService chat(String contact) throws Exception {
-		if(isAuthenticated()) {
-			MultiUserChat chat = new MultiUserChat(connection, "asd");
-			XMPPMessageService messageService = new XMPPMessageService(chat,contact);
-			chats.add(messageService);
-		}
-		return null;
-	}
-
-	@Override
 	public void connect(String server, int port) throws Exception {
+		initConnection(server, port);
 		connection.connect();
 	}
 
@@ -73,11 +65,20 @@ public class XMPPConnectionService implements
 	@Override
 	public PresenceService login(String username, String password) throws Exception {
 		connection.login(username, password);
-		XMPPPresenceService presence = new XMPPPresenceService(connection);
 		sendConnectionEvent("Connected...");
-		return presence;
+		return new XMPPPresenceService(connection);
 	}
-
+	
+	@Override
+	public MessageService chat(String contact) throws Exception {
+		ChatManager manager = connection.getChatManager();
+		if(!isAuthenticated()) return null;
+	
+		MessageService service = new XMPPMessageService(manager, contact);
+		chats.put(contact, service);
+		return service;
+	}
+	
 	@Override
 	public void connectionClosed() {
 		sendDisconnectionEvent("Connection Closed...");
