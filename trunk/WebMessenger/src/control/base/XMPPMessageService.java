@@ -1,8 +1,8 @@
 package control.base;
 
+import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smack.MessageListener;
 
 import control.top.MessageReceiver;
 import control.top.MessageService;
@@ -12,27 +12,28 @@ public class XMPPMessageService implements
 	XMPPMessageListener,
 	MessageService {
 	
+	private Chat chat;
+	private ChatManager chatManager;
+	private String contact;
+	
 	public XMPPMessageService(ChatManager manager, String contact) {
 		// TODO Auto-generated method stub
+		this.chatManager = manager;
+		this.contact = contact;
 	}
 	
 	@Override
 	public void addMessageReceiver(MessageReceiver receiver) {
 		// TODO Auto-generated method stub	
 	}
-
+	
 	@Override
-	public void invite(String contact) {
-		// TODO Auto-generated method stub
+	public void createChat(MessageListener listener){
+		chat = chatManager.createChat(contact, listener);
 	}
-
-	@Override
-	public void kick(String contact) throws Exception{
-		// TODO Auto-generated method stub
-	}
-
+	
 	@Override
 	public void send(String message) throws Exception {
-		// TODO Auto-generated method stub
+		chat.sendMessage(message);
 	}
 }
