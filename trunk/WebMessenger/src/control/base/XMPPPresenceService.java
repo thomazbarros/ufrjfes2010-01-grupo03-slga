@@ -29,12 +29,6 @@ public class XMPPPresenceService implements
 	}
 
 	@Override
-	public String getStatus() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setStatus(String status) {
 		Presence presence = new Presence(Presence.Type.available);
 	    presence.setStatus(status);
