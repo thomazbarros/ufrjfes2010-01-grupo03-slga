@@ -1,8 +1,9 @@
 package control.top;
 
+import org.jivesoftware.smack.MessageListener;
+
 public interface MessageService extends MessageSender {
 	public void addMessageReceiver(MessageReceiver receiver);
 	
-	public void invite(String contact);
-	public void kick(String contact) throws Exception;
+	public void createChat(MessageListener listener);
 }
