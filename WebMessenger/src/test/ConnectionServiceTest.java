@@ -23,7 +23,9 @@ public class ConnectionServiceTest {
     @BeforeClass static public void
     connectionInitiation() {
     	context = new JUnit4Mockery();
-    	service = new XMPPConnectionService();
+    	service = new XMPPConnectionService(
+    			TestAccount.server,
+    			TestAccount.port);
     }
     
     @Test public void

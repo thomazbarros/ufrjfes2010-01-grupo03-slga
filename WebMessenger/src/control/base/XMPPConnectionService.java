@@ -20,31 +20,19 @@ public class XMPPConnectionService implements
 	private XMPPConnection connection;
 	private Set<ConnectionListener> listeners;
 	private Set<XMPPMessageService> chats;
-	private MultiUserChat multiChat;
 	
-	public XMPPConnectionService() {
-		this.connection = null;
+	private void initConnection(String server, int port) {
+		ConnectionConfiguration configuration = new
+		ConnectionConfiguration(server, port, "gmail.com");
+		configuration.setSASLAuthenticationEnabled(true);
+		configuration.setCompressionEnabled(true);
+		this.connection = new XMPPConnection(configuration);
+	}
+	
+	public XMPPConnectionService(String server, int port) {
+		initConnection(server, port);
 		this.listeners = new TreeSet<ConnectionListener>();
 		this.chats = new TreeSet<XMPPMessageService>();
-		multiChat = new MultiUserChat(connection,"myroom1@gmail.com");
-	}
-	
-	private void sendConnectionEvent(String message) {
-		for (ConnectionListener listener : listeners) {
-			listener.connectionEvent(message);
-		}
-	}
-	
-	private void sendReconnectionEvent(String message) {
-		for (ConnectionListener listener : listeners) {
-			listener.reconnectionEvent(message);
-		}
-	}
-	
-	private void sendDisconnectionEvent(String message) {
-		for (ConnectionListener listener : listeners) {
-			listener.disconnectionEvent(message);
-		}
 	}
 	
 	@Override
@@ -54,8 +42,9 @@ public class XMPPConnectionService implements
 
 	@Override
 	public MessageService chat(String contact) throws Exception {
-		if(connection != null) {
-			XMPPMessageService messageService = new XMPPMessageService(multiChat,contact);
+		if(isAuthenticated()) {
+			MultiUserChat chat = new MultiUserChat(connection, "asd");
+			XMPPMessageService messageService = new XMPPMessageService(chat,contact);
 			chats.add(messageService);
 		}
 		return null;
@@ -63,47 +52,30 @@ public class XMPPConnectionService implements
 
 	@Override
 	public void connect(String server, int port) throws Exception {
-		if(connection != null)
-			disconnect();
-		
-		ConnectionConfiguration configuration = new
-		ConnectionConfiguration(server, port, "gmail.com");
-		configuration.setSASLAuthenticationEnabled(true);
-		configuration.setCompressionEnabled(true);
-		connection = new XMPPConnection(configuration);
 		connection.connect();
 	}
 
 	@Override
 	public void disconnect() {
-		if(connection != null)
-			connection.disconnect();
-		connection = null;
+		connection.disconnect();
 	}
 
 	@Override
 	public boolean isAuthenticated() {
-		if(connection != null)
-			return connection.isAuthenticated();
-		return false;
+		return connection.isAuthenticated();
 	}
 
 	@Override
 	public boolean isConnected() {
-		if(connection != null)
-			return connection.isConnected();
-		return false;
+		return connection.isConnected();
 	}
 
 	@Override
 	public PresenceService login(String username, String password) throws Exception {
-		if(connection != null) {
-			connection.login(username, password);
-			XMPPPresenceService presence = new XMPPPresenceService(connection);
-			sendConnectionEvent("Connected...");
-			return presence;
-		}
-		return null;
+		connection.login(username, password);
+		XMPPPresenceService presence = new XMPPPresenceService(connection);
+		sendConnectionEvent("Connected...");
+		return presence;
 	}
 
 	@Override
@@ -131,8 +103,21 @@ public class XMPPConnectionService implements
 		sendConnectionEvent("Connected...");
 	}
 
-	public MultiUserChat getMultiChat() {
-		return multiChat;
+	private void sendConnectionEvent(String message) {
+		for (ConnectionListener listener : listeners) {
+			listener.connectionEvent(message);
+		}
 	}
-
+	
+	private void sendReconnectionEvent(String message) {
+		for (ConnectionListener listener : listeners) {
+			listener.reconnectionEvent(message);
+		}
+	}
+	
+	private void sendDisconnectionEvent(String message) {
+		for (ConnectionListener listener : listeners) {
+			listener.disconnectionEvent(message);
+		}
+	}
 }
