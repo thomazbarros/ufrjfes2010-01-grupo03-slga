@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import model.percistence.AbstractXML;
+
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
@@ -22,6 +24,7 @@ public class XMPPConnectionService implements
 	private XMPPConnection connection;
 	private Set<ConnectionListener> listeners;
 	private Map<String, MessageService> chats;
+	private AbstractXML abstractXML;
 	
 	private void initConnection(String server, int port) {
 		ConnectionConfiguration configuration = new
@@ -34,6 +37,7 @@ public class XMPPConnectionService implements
 	public XMPPConnectionService() {
 		this.listeners = new TreeSet<ConnectionListener>();
 		this.chats = new TreeMap<String, MessageService>();
+		this.abstractXML = new AbstractXML();
 	}
 	
 	@Override
@@ -66,6 +70,7 @@ public class XMPPConnectionService implements
 	public PresenceService login(String username, String password) throws Exception {
 		connection.login(username, password);
 		sendConnectionEvent("Connected...");
+		abstractXML.setUser(username);
 		return new XMPPPresenceService(connection);
 	}
 	
@@ -74,7 +79,7 @@ public class XMPPConnectionService implements
 		ChatManager manager = connection.getChatManager();
 		if(!isAuthenticated()) return null;
 	
-		MessageService service = new XMPPMessageService(manager, contact);
+		MessageService service = new XMPPMessageService(manager, contact, abstractXML);
 		chats.put(contact, service);
 		return service;
 	}
