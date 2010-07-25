@@ -2,6 +2,8 @@ package control.base;
 
 import java.util.Set;
 
+import model.percistence.AbstractXML;
+
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.MessageListener;
