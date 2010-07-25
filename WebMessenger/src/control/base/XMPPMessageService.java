@@ -1,6 +1,6 @@
 package control.base;
 
-import model.percistence.AbstractXML;
+import java.util.Set;
 
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
@@ -17,31 +17,25 @@ public class XMPPMessageService implements
 	private Chat chat;
 	private ChatManager chatManager;
 	private String contact;
-	private AbstractXML abstractXML;
-	private String id;
+	private Set<MessageReceiver> receivers;
 	
-	public XMPPMessageService(ChatManager manager, String contact, AbstractXML abstractXML) {
-		// TODO Auto-generated method stub
+	public XMPPMessageService(ChatManager manager, String contact) {
 		this.chatManager = manager;
 		this.contact = contact;
-		this.abstractXML = abstractXML;
 	}
 	
 	@Override
 	public void addMessageReceiver(MessageReceiver receiver) {
-		// TODO Auto-generated method stub	
+		receivers.add(receiver);
 	}
 	
 	@Override
 	public void createChat(MessageListener listener){
 		chat = chatManager.createChat(contact, listener);
-		id = abstractXML.iniciaChat();
 	}
 	
 	@Override
 	public void send(String message) throws Exception {
 		chat.sendMessage(message);
-		chat.getParticipant();
-		abstractXML.gravaMensagemEnviada(message, id);
 	}
 }
