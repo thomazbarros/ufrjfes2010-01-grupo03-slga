@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.jdom.Document;
@@ -15,10 +16,12 @@ import org.jdom.output.XMLOutputter;
 
 public class AbstractXML {
 
-	Element chat, historicoConversas;
-	Document documento;
-	String path;
-	int ultimoId;
+	private HashMap <String,Element> chat;
+	private Element historicoConversas;
+	private Document documento;
+	private String path;
+	private String user;
+	private int ultimoId;
 
 	public AbstractXML() {
 		SAXBuilder builder = new SAXBuilder();
@@ -33,13 +36,20 @@ public class AbstractXML {
 		}
 
 		path = "C:\\arquivo.xml";
+		
+		chat = new HashMap<String,Element>();
 	}
 
-	public void iniciaChat() {
-		chat = new Element("Chat");
+	public String iniciaChat() {
+		Element novoChat = new Element("Chat");
+		String id = String.valueOf(ultimoId + 1);
+		ultimoId++;
+		novoChat.setAttribute("id", id);
+		chat.put(id, novoChat);
+		return id;
 	}
 
-	public void gravaMensagem(String usuario, String conteudo) {
+	public void gravaMensagemRecebida(String usuario, String conteudo, String id) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		String data = sdf.format(new Date());
 
@@ -48,20 +58,29 @@ public class AbstractXML {
 		mensagem.setAttribute("usuario", usuario);
 		mensagem.setText(conteudo);
 
-		chat.addContent("\n		");
-		chat.addContent(mensagem);
+		chat.get(id).addContent("\n		");
+		chat.get(id).addContent(mensagem);
+	}
+	
+	public void gravaMensagemEnviada(String conteudo, String id) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		String data = sdf.format(new Date());
+
+		Element mensagem = new Element("mensagem");
+		mensagem.setAttribute("data", data);
+		mensagem.setAttribute("usuario", user);
+		mensagem.setText(conteudo);
+
+		chat.get(id).addContent("\n		");
+		chat.get(id).addContent(mensagem);
 	}
 
-	public void encerraChat() {
+	public void encerraChat(String id) {
 
-		chat.addContent("\n	");
-
-		String id = String.valueOf(ultimoId + 1);
-		ultimoId++;
-		chat.setAttribute("id", id);
+		chat.get(id).addContent("\n	");
 
 		historicoConversas.addContent("\n	");
-		historicoConversas.addContent(chat);
+		historicoConversas.addContent(chat.get(id));
 		historicoConversas.addContent("\n");
 
 		XMLOutputter xout = new XMLOutputter();
@@ -74,7 +93,8 @@ public class AbstractXML {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		chat.remove(id);
 	}
 
 	public void imprimeConversas() {
@@ -113,8 +133,6 @@ public class AbstractXML {
 				dataFinalConversa = new Date(format.parse(data2).getTime());
 				dataInicioBusca = new Date(format.parse(dataInicial).getTime());
 				dataFinalBusca = new Date(format.parse(dataFinal).getTime());
-				//data = new Date(format.parse(data1).getTime());
-				//System.out.println(data.before(new Date()));
 			}
 			catch(Exception exc){
 				exc.printStackTrace();
@@ -187,6 +205,10 @@ public class AbstractXML {
 		
 		}
 		return listaFormatada;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 }
