@@ -18,10 +18,13 @@ public class XMPPMessageService implements
 	private ChatManager chatManager;
 	private String contact;
 	private Set<MessageReceiver> receivers;
+	private AbstractXML abstractXML;
+	private String id;
 	
-	public XMPPMessageService(ChatManager manager, String contact) {
+	public XMPPMessageService(ChatManager manager, String contact, AbstractXML abstractXML) {
 		this.chatManager = manager;
 		this.contact = contact;
+		this.abstractXML = abstractXML;
 	}
 	
 	@Override
@@ -32,10 +35,13 @@ public class XMPPMessageService implements
 	@Override
 	public void createChat(MessageListener listener){
 		chat = chatManager.createChat(contact, listener);
+		id = abstractXML.iniciaChat();
 	}
 	
 	@Override
 	public void send(String message) throws Exception {
 		chat.sendMessage(message);
+	    chat.getParticipant();
+        abstractXML.gravaMensagemEnviada(message, id);
 	}
 }
