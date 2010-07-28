@@ -13,7 +13,6 @@ import org.jivesoftware.smack.XMPPConnection;
 
 import control.top.ConnectionListener;
 import control.top.ConnectionService;
-import control.top.ContactManagerService;
 import control.top.MessageService;
 import control.top.PresenceService;
 import control.wrap.XMPPConnectionListener;
@@ -26,7 +25,7 @@ public class XMPPConnectionService implements
 	private Set<ConnectionListener> listeners;
 	private Map<String, MessageService> chats;
 	private AbstractXML abstractXML;
-	private XMPPContactManagerService contactManagerService;
+	private XMPPContactService contactManagerService;
 	
 	private void initConnection(String server, int port) {
 		ConnectionConfiguration configuration = new
@@ -34,7 +33,7 @@ public class XMPPConnectionService implements
 		configuration.setSASLAuthenticationEnabled(true);
 		configuration.setCompressionEnabled(true);
 		this.connection = new XMPPConnection(configuration);
-		contactManagerService = new XMPPContactManagerService(connection);
+		contactManagerService = new XMPPContactService(connection);
 	}
 	
 	public XMPPConnectionService() {
@@ -130,11 +129,7 @@ public class XMPPConnectionService implements
 		}
 	}
 	
-	public XMPPConnection getConexao(){
-		return connection;
-	}
-
-	public XMPPContactManagerService getContactManagerService() {
+	public XMPPContactService getContactManagerService() {
 		return contactManagerService;
 	}
 
