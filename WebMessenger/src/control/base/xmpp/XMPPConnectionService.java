@@ -135,7 +135,7 @@ public class XMPPConnectionService implements
 		return contactManagerService;
 	}
 	
-	public XMPPAccountService getAccountManahgerService(){
+	public XMPPAccountService getAccountManagerService(){
 		return accountManagerService;
 	}
 }
