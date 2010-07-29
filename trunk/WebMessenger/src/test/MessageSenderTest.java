@@ -1,5 +1,7 @@
 package test;
 
+import junit.framework.Assert;
+
 import org.jivesoftware.smack.MessageListener;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -22,19 +24,27 @@ public class MessageSenderTest {
 	@BeforeClass static public void
 	messageSenderInitiation() throws Exception{
 		connection = new XMPPConnectionService();
-		connection = new XMPPConnectionService();
-		connection.connect(TestAccount.server, TestAccount.port);
-		service = connection.chat("gust.has@gmail.com");
+		//connection = new XMPPConnectionService();
+		try{
+			connection.connect(TestAccount.server,TestAccount.port);
+			connection.login(TestAccount.username, TestAccount.password);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		service = connection.chat("gustavo.cpii.ufrj@gmail.com");
 		context = new JUnit4Mockery();
 	}
 	
 	@Test public void
 	testSend() throws Exception{
+		boolean exceptionRaised = false;
 		MessageListener listener = context.mock(MessageListener.class);
 		service.createChat(listener);
-		service.send("Cante 'Hare Krishna' e seja feliz!");
-		
-		context.checking(new Expectations() {{
-		}});
+		try{
+			service.send("Cante 'Hare Krishna' e seja feliz!");
+		}catch(Exception e){
+			exceptionRaised = true;
+		}
+		Assert.assertFalse(exceptionRaised);			
 	}
 }
