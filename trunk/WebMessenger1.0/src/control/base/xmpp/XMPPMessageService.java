@@ -49,7 +49,8 @@ public class XMPPMessageService implements
 
 	@Override
 	public void processMessage(Chat arg0, Message arg1) {
-		// TODO Auto-generated method stub
-		
+		for(MessageReceiver receiver : receivers) {
+			receiver.receive(arg1.getFrom(), arg1.getBody());
+		}
 	}
 }
