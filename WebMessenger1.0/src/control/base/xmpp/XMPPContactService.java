@@ -1,7 +1,13 @@
 package control.base.xmpp;
 
+import java.util.ArrayList;
+
+import org.jivesoftware.smack.PrivacyListManager;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.PrivacyItem;
+import org.jivesoftware.smack.packet.PrivacyItem.PrivacyRule;
 
 import control.top.ContactService;
 

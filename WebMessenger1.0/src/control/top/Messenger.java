@@ -12,7 +12,8 @@ import com.vaadin.Application;
 import control.base.xmpp.XMPPConnectionService;
 
 @SuppressWarnings("serial")
-public class Messenger extends Application {
+public class Messenger extends Application implements
+	ConnectionListener {
 	private XMPPConnectionService connectionService;
 	private MessageService service;
 	private MessageWindow messageWindow = new MessageWindow();
@@ -20,8 +21,7 @@ public class Messenger extends Application {
 	@Override
 	public void init() {
 		connectionService = new XMPPConnectionService();
-		
-		//connectionService.setConnectionListener(this);
+		connectionService.addConnectionListener(this);
 		try{
 			connectionService.connect("talk.google.com",5222);
 			connectionService.login("falsoparafes@gmail.com","euaindasouumcorreiodeteste");
@@ -39,10 +39,25 @@ public class Messenger extends Application {
 		
 		setMainWindow(new MainWindow("Luiz"));
 	}
-	
-	public void connectionEvent(String value){
+
+	@Override
+	public void connectionEvent(String message) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
+
+	@Override
+	public void reconnectionEvent(String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void disconnectionEvent(String message) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
