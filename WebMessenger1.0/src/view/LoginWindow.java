@@ -10,7 +10,6 @@ import com.vaadin.ui.Window;
 
 public class LoginWindow extends Window{
 
-	Window subwindow;
 	public LoginWindow() {
 		super("Autenticação");
 		// Create the window...
@@ -20,7 +19,7 @@ public class LoginWindow extends Window{
 		setHeight("600");
 
 		// Configure the windows layout; by default a VerticalLayout
-		VerticalLayout layout = (VerticalLayout) subwindow.getContent();
+		VerticalLayout layout = (VerticalLayout) getContent();
 		layout.setMargin(true);
 		layout.setSpacing(true);
 
@@ -31,8 +30,8 @@ public class LoginWindow extends Window{
 		//subwindow.addComponent(new Label("Usuário:"));
 
 		LoginForm login = new LoginForm();
-		setWidth("100%");
-		setHeight("300px");
+		setWidth("200px");
+		setHeight("100px");
 		
 		login.addListener(new LoginForm.LoginListener() {
 			//System.out.println("Qual o numero?") ; 

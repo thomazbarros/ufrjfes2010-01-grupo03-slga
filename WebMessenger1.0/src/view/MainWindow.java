@@ -17,6 +17,7 @@ public class MainWindow extends Window{
 	
 	public MainWindow(String username) {
 		super("WebMessenger");
+		
 		final MenuBar.MenuItem logout = menubar.addItem( "Sair" , menuCommand);
 		final MenuBar.MenuItem contatos = menubar.addItem("Contatos", null);
                
@@ -39,16 +40,19 @@ public class MainWindow extends Window{
        addComponent(menubar);
 		
 		messageWindow.center();
-		addWindow(messageWindow);
 		
-		messageWindow.startChat("Leopoldo");
-		messageWindow.startChat("Gustavo");
+		addWindow(new LoginWindow());
+		
+		//addWindow(messageWindow);
+		
+		//messageWindow.startChat("Leopoldo");
+		//messageWindow.startChat("Gustavo");
 	}
+
 	private Command menuCommand = new Command() {
 	        public void menuSelected(MenuItem selectedItem) {
 	            getWindow().showNotification("Action " + selectedItem.getText());
 	        }
 	    };
 
-	
 }
