@@ -138,4 +138,5 @@ public class XMPPConnectionService implements
 	public XMPPAccountService getAccountManagerService(){
 		return accountManagerService;
 	}
+	
 }
