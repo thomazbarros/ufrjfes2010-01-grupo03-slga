@@ -14,6 +14,9 @@ public class MainWindow extends Window{
 	private MessageWindow messageWindow = new MessageWindow();
     private MenuBar menubar = new MenuBar();
 
+    public MessageWindow getMessageWindow() {
+    	return messageWindow;
+    }
 	
 	public MainWindow(String username) {
 		super("WebMessenger");
@@ -43,10 +46,9 @@ public class MainWindow extends Window{
 		
 		addWindow(new LoginWindow());
 		
-		//addWindow(messageWindow);
+		addWindow(messageWindow);
 		
-		//messageWindow.startChat("Leopoldo");
-		//messageWindow.startChat("Gustavo");
+		
 	}
 
 	private Command menuCommand = new Command() {

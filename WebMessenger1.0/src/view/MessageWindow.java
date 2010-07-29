@@ -1,18 +1,24 @@
 package view;
 
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.packet.Message;
+
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.Tab;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class MessageWindow extends Window {
+import control.top.MessageReceiver;
+
+public class MessageWindow extends Window implements MessageListener, MessageReceiver {
 	
 	private TabSheet sheet = new TabSheet();
 	private RichTextArea input;
-	private TextField output;
+	private Label output;
 	
 	public void setOutputText(String message) {
 		this.output.setCaption(message);
@@ -35,9 +41,10 @@ public class MessageWindow extends Window {
 		layout.setMargin(true);
 		layout.setSizeFull();
 		
-		output = new TextField();
+		output = new Label();
 		output.setWidth("100%");
 		output.setHeight("100%");
+		output.setContentMode(Label.CONTENT_TEXT);
 		layout.addComponent(output);
 		layout.setExpandRatio(output, 5f);
 		
@@ -54,7 +61,16 @@ public class MessageWindow extends Window {
 		Tab chat = sheet.addTab(layout, contact, null);
 		chat.setClosable(true);
 	}
-	
-	
-	
+
+	@Override
+	public void processMessage(Chat arg0, Message arg1) {
+		input.setCaption(input.getCaption() + "\n" +
+				arg1.getFrom() + " said: " + arg1.getBody());
+	}
+
+	@Override
+	public void receive(String from, String message) {
+		input.setCaption(input.getCaption() + "\n" +
+				from + " said: " + message);		
+	}
 }
