@@ -38,5 +38,8 @@ public class XMPPContactService implements ContactService{
 			e.printStackTrace();
 		}
 	}
-
+	
+	public boolean contains(String user){
+		return connection.getRoster().contains(user);
+	}
 }
