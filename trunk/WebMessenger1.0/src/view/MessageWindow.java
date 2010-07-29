@@ -11,7 +11,13 @@ import com.vaadin.ui.Window;
 public class MessageWindow extends Window {
 	
 	private TabSheet sheet = new TabSheet();
+	private RichTextArea input;
+	private TextField output;
 	
+	public void setOutputText(String message) {
+		this.output.setCaption(message);
+	}
+
 	public MessageWindow() {
 		super("Messages");
 		setWidth("600px");
@@ -29,13 +35,13 @@ public class MessageWindow extends Window {
 		layout.setMargin(true);
 		layout.setSizeFull();
 		
-		TextField output = new TextField();
+		output = new TextField();
 		output.setWidth("100%");
 		output.setHeight("100%");
 		layout.addComponent(output);
 		layout.setExpandRatio(output, 5f);
 		
-		RichTextArea input = new RichTextArea();
+		input = new RichTextArea();
 		input.setWidth("100%");
 		input.setHeight("100%");
 		layout.addComponent(input);
@@ -48,4 +54,7 @@ public class MessageWindow extends Window {
 		Tab chat = sheet.addTab(layout, contact, null);
 		chat.setClosable(true);
 	}
+	
+	
+	
 }
