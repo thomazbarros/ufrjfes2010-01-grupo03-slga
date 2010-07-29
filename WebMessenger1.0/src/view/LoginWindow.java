@@ -12,13 +12,12 @@ public class LoginWindow extends Window{
 
 	Window subwindow;
 	public LoginWindow() {
-		
+		super("Autenticação");
 		// Create the window...
-		subwindow = new Window("Login");
-		// ...and make it modal
-		subwindow.setModal(true);
-		subwindow.setWidth("800");
-		subwindow.setHeight("600");
+		
+		setModal(true);
+		setWidth("800");
+		setHeight("600");
 
 		// Configure the windows layout; by default a VerticalLayout
 		VerticalLayout layout = (VerticalLayout) subwindow.getContent();
@@ -27,13 +26,14 @@ public class LoginWindow extends Window{
 
 		// Add some content; a label and a close-button
 		Label message = new Label("Bem-vindo ao WebMessenger.");
-		subwindow.addComponent(message);
+		addComponent(message);
 
 		//subwindow.addComponent(new Label("Usuário:"));
 
 		LoginForm login = new LoginForm();
-		login.setWidth("100%");
-		login.setHeight("300px");
+		setWidth("100%");
+		setHeight("300px");
+		
 		login.addListener(new LoginForm.LoginListener() {
 			//System.out.println("Qual o numero?") ; 
 			//System.out.println("");
@@ -45,11 +45,8 @@ public class LoginWindow extends Window{
 						+ event.getLoginParameter("senha"));
 			}
 		});
-		subwindow.addComponent(login);
-
-		getWindow().addWindow(subwindow);
-		//addComponent(open);
-
+		
+		addComponent(login);
 	}
 
 }
