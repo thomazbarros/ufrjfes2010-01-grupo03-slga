@@ -4,6 +4,8 @@ import org.jivesoftware.smack.AccountManager;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 
+import control.top.AccountService;
+
 public class XMPPAccountService implements AccountService{
 	
 	private AccountManager accountManager;
