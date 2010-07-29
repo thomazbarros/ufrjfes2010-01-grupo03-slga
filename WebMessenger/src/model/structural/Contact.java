@@ -1,6 +1,6 @@
 package model.structural;
 
-public class Contact extends People implements java.io.Serializable{
+public class Contact extends Person implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private boolean isBlocked;
 	
