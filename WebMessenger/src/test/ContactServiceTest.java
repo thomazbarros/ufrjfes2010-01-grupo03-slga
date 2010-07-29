@@ -16,11 +16,20 @@ public class ContactServiceTest {
 	@BeforeClass static public void
 	conatactTest(){
 		connection = new XMPPConnectionService();
+		
+		try{
+			connection.connect(TestAccount.server,TestAccount.port);
+			connection.login(TestAccount.username, TestAccount.password);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		service = connection.getContactManagerService();
 	}
 	
 	@Test public void
 	addContactTest(){
+		Assert.assertFalse(service == null);
 		service.addContact("gustavo.cpii.ufrj@gmail.com", "Gustavo", "Grupo");
 		Assert.assertTrue(service.contains("gustavo.cpii.ufrj@gmail.com"));
 	}

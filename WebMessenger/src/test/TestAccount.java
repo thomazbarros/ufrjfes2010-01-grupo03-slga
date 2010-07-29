@@ -5,5 +5,5 @@ public class TestAccount {
 	final static String server = "talk.google.com";
 	
 	final static String username = "falsoparafes@gmail.com";
-	final static String password = "eusouumcorreiodeteste";
+	final static String password = "euaindasouumcorreiodeteste";
 }

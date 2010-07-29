@@ -38,6 +38,16 @@ public class XMPPConnectionService implements
 		accountManagerService = new XMPPAccountService(connection);
 	}
 	
+	private void initConnection(String server) {
+		ConnectionConfiguration configuration = new
+		ConnectionConfiguration("jabber.org");
+		configuration.setSASLAuthenticationEnabled(true);
+		configuration.setCompressionEnabled(true);
+		this.connection = new XMPPConnection(configuration);
+		contactManagerService = new XMPPContactService(connection);
+		accountManagerService = new XMPPAccountService(connection);
+	}
+	
 	public XMPPConnectionService() {
 		this.listeners = new TreeSet<ConnectionListener>();
 		this.chats = new TreeMap<String, MessageService>();
@@ -52,6 +62,11 @@ public class XMPPConnectionService implements
 	@Override
 	public void connect(String server, int port) throws Exception {
 		initConnection(server, port);
+		connection.connect();
+	}
+	
+	public void connect(String server) throws Exception {
+		initConnection(server);
 		connection.connect();
 	}
 
