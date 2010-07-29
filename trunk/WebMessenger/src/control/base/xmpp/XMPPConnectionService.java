@@ -26,6 +26,7 @@ public class XMPPConnectionService implements
 	private Map<String, MessageService> chats;
 	private AbstractXML abstractXML;
 	private XMPPContactService contactManagerService;
+	private XMPPAccountService accountManagerService;
 	
 	private void initConnection(String server, int port) {
 		ConnectionConfiguration configuration = new
@@ -34,6 +35,7 @@ public class XMPPConnectionService implements
 		configuration.setCompressionEnabled(true);
 		this.connection = new XMPPConnection(configuration);
 		contactManagerService = new XMPPContactService(connection);
+		accountManagerService = new XMPPAccountService(connection);
 	}
 	
 	public XMPPConnectionService() {
@@ -131,5 +133,9 @@ public class XMPPConnectionService implements
 	
 	public XMPPContactService getContactManagerService() {
 		return contactManagerService;
+	}
+	
+	public XMPPAccountService getAccountManagerService(){
+		return accountManagerService;
 	}	
 }
