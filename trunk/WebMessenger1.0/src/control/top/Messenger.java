@@ -8,21 +8,28 @@ import view.MainWindow;
 import view.MessageWindow;
 
 import com.vaadin.Application;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 
 import control.base.xmpp.XMPPConnectionService;
 
 @SuppressWarnings("serial")
 public class Messenger extends Application implements
-	ConnectionListener {
+	ConnectionListener,ClickListener {
 	private XMPPConnectionService connectionService;
 	private MessageService service;
-	private MessageWindow messageWindow = new MessageWindow();
+	//private MessageWindow messageWindow = new MessageWindow();
+	private MessageWindow message;
 	
+	//public MessageWindow getMessage() {
+	//	return message;
+	//}
+
 	@Override
 	public void init() {
 		final MainWindow window = new MainWindow("Luiz");
-		MessageWindow message = window.getMessageWindow();
-		message.startChat("gust.has@gmail.com");
+		message = window.getMessageWindow();
+		message.startChat("flavio.franca.ufrj@gmail.com");
 		
 		connectionService = new XMPPConnectionService();
 		//connectionService.addConnectionListener(this);
@@ -47,6 +54,23 @@ public class Messenger extends Application implements
 		}catch(Exception e){
 			
 		}
+		ClickListener c = new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				System.out.println("Botao :D");
+				try{
+					service.send(message.getInputText());
+				}catch(Exception e){
+					
+				}
+				
+				message.esvaziaInputText();
+			
+			}
+		};
+		
+		message.setListenerButton(c);
 		
 		setMainWindow(window);
 	}
@@ -69,6 +93,29 @@ public class Messenger extends Application implements
 	public void disconnectionEvent(String message) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/*public void buttonClick(){
+		try{
+			service.send(message.getInputText());
+		}catch(Exception e){
+			
+		}
+		
+		message.esvaziaInputText();
+	}*/
+
+	@Override
+	public void buttonClick(ClickEvent event) {
+		System.out.println("Botao :D");
+		try{
+			service.send(message.getInputText());
+		}catch(Exception e){
+			
+		}
+		
+		message.esvaziaInputText();
+	
 	}
 
 }
