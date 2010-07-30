@@ -23,7 +23,7 @@ public class Messenger extends Application {
 	public void init() {
 		final MainWindow window = new MainWindow("Luiz");
 		message = window.getMessageWindow();
-		message.startChat("gust.has@gmail.com");
+		message.startChat("flavio.franca.ufrj@gmail.com");
 		
 		connectionService = new XMPPConnectionService();
 		try{
