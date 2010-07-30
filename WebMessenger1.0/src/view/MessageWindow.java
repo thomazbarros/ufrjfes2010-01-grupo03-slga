@@ -1,8 +1,6 @@
 package view;
 
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.packet.Message;
+import org.vaadin.artur.icepush.ICEPush;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -12,16 +10,23 @@ import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-import control.top.MessageReceiver;
-
-public class MessageWindow extends Window implements MessageListener, MessageReceiver {
+public class MessageWindow extends Window { //implements MessageListener, MessageReceiver {
 	
 	private TabSheet sheet = new TabSheet();
 	private RichTextArea input;
 	private Label output;
+	//private ICEPush pusher;
+
 	
 	public void setOutputText(String message) {
-		this.output.setCaption(message);
+		this.output.setValue(message);
+		System.out.println("Entrei aqui e modifiquei geral");
+		System.out.println(output.getValue());
+		//pusher.push();
+		/*output.requestRepaint();
+		output.setImmediate(true);
+		output.requestRepaint();*/
+		//this.paint(output);
 	}
 
 	public MessageWindow() {
@@ -41,10 +46,17 @@ public class MessageWindow extends Window implements MessageListener, MessageRec
 		layout.setMargin(true);
 		layout.setSizeFull();
 		
+		//pusher = new ICEPush();
+		//this.addComponent(pusher);
+		
 		output = new Label();
 		output.setWidth("100%");
 		output.setHeight("100%");
 		output.setContentMode(Label.CONTENT_TEXT);
+		output.setValue("AAA");
+		output.setImmediate(true);
+		//RepaintRequestListener listener = new RepaintRequestListener();
+		//output.addListener(listener);
 		layout.addComponent(output);
 		layout.setExpandRatio(output, 5f);
 		
@@ -60,17 +72,19 @@ public class MessageWindow extends Window implements MessageListener, MessageRec
 		
 		Tab chat = sheet.addTab(layout, contact, null);
 		chat.setClosable(true);
+		this.requestRepaintRequests();
 	}
+	
 
-	@Override
+/*	@Override
 	public void processMessage(Chat arg0, Message arg1) {
-		input.setCaption(input.getCaption() + "\n" +
+		input.setValue(input.getValue() + "\n" +
 				arg1.getFrom() + " said: " + arg1.getBody());
 	}
-
-	@Override
-	public void receive(String from, String message) {
-		input.setCaption(input.getCaption() + "\n" +
-				from + " said: " + message);		
-	}
+*/
+	//@Override
+//	public void receive(String from, String message) {
+//		input.setValue(input.getValue() + "\n" +
+	//			from + " said: " + message);		
+	//}
 }

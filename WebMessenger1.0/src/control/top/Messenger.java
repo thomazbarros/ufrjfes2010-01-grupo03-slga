@@ -3,6 +3,7 @@ package control.top;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.packet.Message;
+import org.vaadin.artur.icepush.ICEPush;
 
 import view.MainWindow;
 import view.MessageWindow;
@@ -35,12 +36,13 @@ public class Messenger extends Application implements
 			service.createChat(new MessageListener(){
 				@Override
 				public void processMessage(Chat chat, Message message){
-					System.out.println(message);
-					window.getMessageWindow().setOutputText(message.toString());
+					System.out.println(message.getBody());
+					window.getMessageWindow().setOutputText(message.getBody());
+					//window.requestRepaintAll();
 				}
 			});
 					//message);
-			service.addMessageReceiver(message);
+			//service.addMessageReceiver(message);
 			
 			
 		}catch(Exception e){
