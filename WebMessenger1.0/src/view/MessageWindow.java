@@ -1,5 +1,7 @@
 package view;
 
+import org.jivesoftware.smack.MessageListener;
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
@@ -9,21 +11,24 @@ import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-public class MessageWindow extends Window { //implements MessageListener, MessageReceiver {
+@SuppressWarnings("serial")
+public class MessageWindow extends Window {
 	
 	private TabSheet sheet = new TabSheet();
 	private RichTextArea input;
 	private Label output;
 	private Button send;
-	//private ICEPush pusher;
-
+	
 	public void esvaziaInputText(){
 		input.setValue("");
 	}
 	
 	public void setListenerButton(ClickListener listener){
-		//System.out.println(send == null);
 		send.addListener(listener);
+	}
+	
+	public void setListenerOutput(MessageListener listener){
+		output.addListener((Listener)listener);
 	}
 	
 	public String getInputText(){
@@ -32,13 +37,7 @@ public class MessageWindow extends Window { //implements MessageListener, Messag
 	
 	public void setOutputText(String message) {
 		this.output.setValue(message);
-		System.out.println("Entrei aqui e modifiquei geral");
 		System.out.println(output.getValue());
-		//pusher.push();
-		/*output.requestRepaint();
-		output.setImmediate(true);
-		output.requestRepaint();*/
-		//this.paint(output);
 	}
 
 	public MessageWindow() {
@@ -58,17 +57,11 @@ public class MessageWindow extends Window { //implements MessageListener, Messag
 		layout.setMargin(true);
 		layout.setSizeFull();
 		
-		//pusher = new ICEPush();
-		//this.addComponent(pusher);
-		
 		output = new Label();
 		output.setWidth("100%");
 		output.setHeight("100%");
 		output.setContentMode(Label.CONTENT_TEXT);
-		output.setValue("AAA");
 		output.setImmediate(true);
-		//RepaintRequestListener listener = new RepaintRequestListener();
-		//output.addListener(listener);
 		layout.addComponent(output);
 		layout.setExpandRatio(output, 5f);
 		
@@ -85,18 +78,5 @@ public class MessageWindow extends Window { //implements MessageListener, Messag
 		Tab chat = sheet.addTab(layout, contact, null);
 		this.requestRepaintRequests();
 		chat.setClosable(true);
-	}
-	
-
-/*	@Override
-	public void processMessage(Chat arg0, Message arg1) {
-		input.setValue(input.getValue() + "\n" +
-				arg1.getFrom() + " said: " + arg1.getBody());
-	}
-*/
-	//@Override
-//	public void receive(String from, String message) {
-//		input.setValue(input.getValue() + "\n" +
-	//			from + " said: " + message);		
-	//}
+	}	
 }
