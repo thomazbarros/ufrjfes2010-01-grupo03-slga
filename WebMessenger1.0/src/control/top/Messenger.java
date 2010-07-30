@@ -3,7 +3,6 @@ package control.top;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.packet.Message;
-import org.vaadin.artur.icepush.ICEPush;
 
 import view.MainWindow;
 import view.MessageWindow;
