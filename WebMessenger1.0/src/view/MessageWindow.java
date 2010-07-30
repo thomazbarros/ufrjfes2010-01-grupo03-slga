@@ -1,6 +1,7 @@
 package view;
 
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TabSheet;
@@ -13,8 +14,21 @@ public class MessageWindow extends Window { //implements MessageListener, Messag
 	private TabSheet sheet = new TabSheet();
 	private RichTextArea input;
 	private Label output;
+	private Button send;
 	//private ICEPush pusher;
 
+	public void esvaziaInputText(){
+		input.setValue("");
+	}
+	
+	public void setListenerButton(ClickListener listener){
+		//System.out.println(send == null);
+		send.addListener(listener);
+	}
+	
+	public String getInputText(){
+		return (String) input.getValue();
+	}
 	
 	public void setOutputText(String message) {
 		this.output.setValue(message);
@@ -64,13 +78,13 @@ public class MessageWindow extends Window { //implements MessageListener, Messag
 		layout.addComponent(input);
 		layout.setExpandRatio(input, 2f);
 		
-		Button send = new Button("Enviar...");
+		send = new Button("Enviar...");
 		layout.addComponent(send);
 		layout.setExpandRatio(send, 1f);
 		
 		Tab chat = sheet.addTab(layout, contact, null);
-		chat.setClosable(true);
 		this.requestRepaintRequests();
+		chat.setClosable(true);
 	}
 	
 
