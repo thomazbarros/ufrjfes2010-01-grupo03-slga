@@ -1,7 +1,5 @@
 package view;
 
-import org.vaadin.artur.icepush.ICEPush;
-
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
