@@ -1,2 +1,0 @@
-# Module control.top.widgetset.MessengerWidgetset
-# RPC service class, partial path of RPC policy file
